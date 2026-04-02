@@ -494,92 +494,47 @@
 
     /* RESPONSIVE */
     @media (max-width: 900px) {
-      .hero-inner {
-        grid-template-columns: 1fr;
-        text-align: center;
-      }
-
-      .hero {
-        padding: 3rem 0;
-      }
-
-      .hero-desc {
-        margin: 0 auto 2rem;
-      }
-
-      .hero-actions {
-        justify-content: center;
-      }
-
-      .hero-stats {
-        justify-content: center;
-      }
-
-      .hero-visual {
-        order: -1;
-      }
-
-      .hero-image-main {
-        max-width: 300px;
-        margin: 0 auto;
-      }
-
-      .hero-float-card {
-        display: none;
-      }
-
-      .benefits-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .about-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .about-images {
-        display: flex;
-        gap: 1rem;
-      }
-
-      .about-img {
-        flex: 1;
-        aspect-ratio: 1;
-      }
-
-      .about-img:first-child {
-        margin-top: 0;
-      }
-
-      .instagram-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
+      .hero-inner { grid-template-columns: 1fr; text-align: center; }
+      .hero { padding: 3rem 0; min-height: auto; }
+      .hero-desc { margin: 0 auto 2rem; }
+      .hero-actions { justify-content: center; flex-wrap: wrap; }
+      .hero-stats { justify-content: center; }
+      .hero-visual { order: -1; }
+      .hero-image-main { max-width: 280px; margin: 0 auto; }
+      .hero-float-card { display: none; }
+      .benefits-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .about-images { display: flex; gap: 1rem; max-height: 280px; }
+      .about-img { flex: 1; aspect-ratio: 1; }
+      .about-img:first-child { margin-top: 0; }
+      .instagram-grid { grid-template-columns: repeat(3, 1fr); }
+      .banner-cta { padding: 3rem 0; }
+      .banner-actions { flex-direction: column; align-items: center; gap: 0.75rem; }
     }
 
     @media (max-width: 600px) {
-      .benefits-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 1rem;
-      }
+      .hero { padding: 2rem 0; }
+      .hero-inner { gap: 2rem; }
+      .hero-image-main { max-width: 220px; }
+      .hero-title { font-size: 2rem; }
+      .hero-desc { font-size: 0.9rem; }
+      .hero-stats { gap: 1rem; flex-wrap: wrap; }
+      .hero-stat strong { font-size: 1.3rem; }
+      .btn-lg { padding: 12px 24px; font-size: 0.9rem; }
+      .benefits-grid { gap: 0.75rem; }
+      .benefit-card { padding: 1.25rem 1rem; }
+      .benefit-icon { width: 48px; height: 48px; margin-bottom: 0.75rem; }
+      .instagram-grid { gap: 0.4rem; }
+      .banner-cta { padding: 2.5rem 0; }
+      .about-images { max-height: 200px; }
+    }
 
-      .instagram-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 0.5rem;
-      }
-
-      .hero-image-main {
-        max-width: 240px;
-      }
-
-      .hero-stats {
-        gap: 1.25rem;
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-
-      .store-banner {
-        flex-direction: column;
-        text-align: center;
-      }
+    @media (max-width: 400px) {
+      .hero-image-main { max-width: 180px; }
+      .benefits-grid { grid-template-columns: 1fr; }
+      .benefit-card { display: flex; align-items: center; gap: 1rem; padding: 1rem; text-align: left; }
+      .benefit-icon { margin: 0; flex-shrink: 0; }
+      .instagram-grid { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
