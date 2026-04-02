@@ -181,7 +181,7 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
         </svg>
-        <input type="text" id="search-input" placeholder="Buscar producto..." autocomplete="off">
+        <input type="text" id="search-input" placeholder="Buscar producto..." autocomplete="off" maxlength="50" spellcheck="false">
       </div>
     </div>
   </div>
@@ -280,8 +280,14 @@
   <script src="js/app.js"></script>
   <script>
     // Búsqueda en tiempo real
+    // Permite solo letras, números, espacios y acentos — bloquea caracteres especiales
+    function sanitize(str) {
+      return str.replace(/[<>"'`;=\\\/\(\)\{\}\[\]|&$%#@!*]/g, '').slice(0, 50);
+    }
+
     const searchInput = document.getElementById('search-input');
     searchInput.addEventListener('input', () => {
+      searchInput.value = sanitize(searchInput.value);
       const query = searchInput.value.toLowerCase().trim();
       const cards = document.querySelectorAll('.product-card');
       let visible = 0;
