@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Carrito de compras — Origen Valle Cosmética Natural">
+  <title>Carrito — Origen Valle</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    .cart-header-section {
+      background: linear-gradient(135deg, var(--primary-light) 0%, #FDFAF7 100%);
+      padding: 3.5rem 0 2.5rem;
+    }
+    .cart-header-section h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      color: var(--dark);
+      margin-bottom: 0.5rem;
+    }
+    .cart-header-section h1 span { color: var(--primary-dark); }
+    .cart-header-section p { color: var(--medium); font-size: 0.9rem; }
+
+    /* Sugeridos */
+    .suggested-section {
+      background: var(--cream);
+      padding: 4rem 0;
+    }
+    .suggested-section .section-header { margin-bottom: 2rem; }
+    .suggested-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+    }
+
+    /* Cupón */
+    .coupon-row {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1.25rem;
+    }
+    .coupon-input {
+      flex: 1;
+      padding: 10px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-pill);
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.85rem;
+      outline: none;
+      background: var(--light-bg);
+      transition: var(--transition);
+    }
+    .coupon-input:focus {
+      border-color: var(--primary);
+      background: var(--white);
+    }
+    .coupon-btn {
+      padding: 10px 18px;
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      border-radius: var(--radius-pill);
+      font-size: 0.82rem;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+    .coupon-btn:hover { background: var(--primary); color: var(--white); }
+
+    /* Info badges en resumen */
+    .summary-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.78rem;
+      color: var(--medium);
+      margin-top: 1rem;
+      padding: 10px 12px;
+      background: var(--primary-light);
+      border-radius: var(--radius-sm);
+    }
+    .summary-info svg { width: 16px; height: 16px; color: var(--primary-dark); flex-shrink: 0; }
+
+    /* Cart Steps indicator */
+    .cart-steps {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 2rem;
+    }
+    .step {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.82rem;
+      color: var(--medium);
+    }
+    .step.active { color: var(--primary-dark); font-weight: 600; }
+    .step-num {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .step.active .step-num {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: var(--white);
+    }
+    .step-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+      margin: 0 0.75rem;
+      max-width: 60px;
+    }
+
+    @media (max-width: 640px) {
+      .suggested-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body data-page="carrito">
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="nav-logo">
+        <img src="logo/WhatsApp%20Image%202026-04-01%20at%2014.21.56.jpeg" alt="Origen Valle Logo">
+        <div class="nav-logo-text">
+          <span>Origen</span>
+          <span>Valle</span>
+        </div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="tienda.html">Tienda</a></li>
+        <li><a href="index.html#nosotros">Nosotros</a></li>
+        <li><a href="index.html#contacto">Contacto</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="carrito.html" class="cart-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+            <path d="M1 1h4l2.68 13.39a2 2 0 001.98 1.61h9.72a2 2 0 001.98-1.61L23 6H6"/>
+          </svg>
+          Carrito
+          <span class="cart-badge">0</span>
+        </a>
+        <button class="menu-toggle" aria-label="Menú">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <div class="cart-header-section">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html">Inicio</a>
+        <span>›</span>
+        <a href="tienda.html">Tienda</a>
+        <span>›</span>
+        <span>Carrito</span>
+      </div>
+      <h1>Mi <span>Carrito</span></h1>
+      <p>Revisa tus productos y finaliza tu pedido fácilmente por WhatsApp</p>
+    </div>
+  </div>
+
+  <!-- CART CONTENT -->
+  <div style="background: var(--light-bg); padding: 1rem 0 3rem;">
+    <div class="container">
+      <div class="cart-layout">
+
+        <!-- Columna izquierda: items -->
+        <div class="cart-items-section">
+
+          <!-- Pasos -->
+          <div class="cart-steps">
+            <div class="step active">
+              <div class="step-num">1</div>
+              <span>Mi carrito</span>
+            </div>
+            <div class="step-line"></div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <span>WhatsApp</span>
+            </div>
+            <div class="step-line"></div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <span>Confirmación</span>
+            </div>
+          </div>
+
+          <h2>Productos en tu carrito</h2>
+
+          <!-- Estado vacío -->
+          <div class="cart-empty hidden" id="cart-empty">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+              <path d="M1 1h4l2.68 13.39a2 2 0 001.98 1.61h9.72a2 2 0 001.98-1.61L23 6H6"/>
+            </svg>
+            <h3>Tu carrito está vacío</h3>
+            <p>Aún no has agregado ningún producto. ¡Explora nuestra tienda y encuentra algo que te encante!</p>
+            <a href="tienda.html" class="btn btn-primary">Ir a la Tienda</a>
+          </div>
+
+          <!-- Items -->
+          <div id="cart-items"></div>
+
+          <!-- Continuar comprando -->
+          <div style="margin-top: 1.5rem;">
+            <a href="tienda.html" class="btn btn-outline" style="gap:8px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
+              </svg>
+              Seguir comprando
+            </a>
+          </div>
+        </div>
+
+        <!-- Columna derecha: resumen -->
+        <div id="order-summary">
+          <div class="order-summary">
+            <h3>Resumen del Pedido</h3>
+
+            <div class="summary-line">
+              <span>Productos (<span id="summary-items">0</span>)</span>
+              <span id="summary-subtotal">$0</span>
+            </div>
+            <div class="summary-line">
+              <span>Envío</span>
+              <span style="color: var(--primary); font-weight:600;">A coordinar</span>
+            </div>
+            <div class="summary-line total">
+              <span>Total</span>
+              <span id="summary-total">$0</span>
+            </div>
+
+            <!-- Cupón -->
+            <div class="coupon-row">
+              <input type="text" class="coupon-input" placeholder="Código de descuento">
+              <button class="coupon-btn">Aplicar</button>
+            </div>
+
+            <!-- Botón WhatsApp -->
+            <button class="whatsapp-btn" onclick="checkoutWhatsApp()">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+              </svg>
+              Pedir por WhatsApp
+            </button>
+
+            <!-- Info de envío -->
+            <div class="summary-info">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+              </svg>
+              El costo de envío se coordina directamente por WhatsApp con tu dirección de entrega.
+            </div>
+
+            <!-- Badges de confianza -->
+            <div class="secure-badges">
+              <div class="secure-badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                Compra<br>Segura
+              </div>
+              <div class="secure-badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
+                </svg>
+                Envío a<br>domicilio
+              </div>
+              <div class="secure-badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+                </svg>
+                Hecho<br>con amor
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SUGERIDOS -->
+  <section class="suggested-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">También te puede gustar</span>
+        <h2 class="section-title">Productos <span>Relacionados</span></h2>
+      </div>
+      <div class="suggested-grid" id="suggested-grid">
+        <!-- Renderizado por JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <img src="logo/WhatsApp%20Image%202026-04-01%20at%2014.21.56.jpeg" alt="Origen Valle">
+            <div class="footer-logo-text">
+              <span>Origen</span>
+              <span>Valle</span>
+            </div>
+          </div>
+          <p class="footer-tagline">Cosméticos naturales artesanales elaborados con amor en el Valle del Aconcagua, Chile.</p>
+          <div class="footer-social">
+            <a href="https://instagram.com/origen_valle" target="_blank" title="Instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                <rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+              </svg>
+            </a>
+            <a href="https://wa.me/56982233777" target="_blank" title="WhatsApp">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Navegación</h4>
+          <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="tienda.html">Tienda</a></li>
+            <li><a href="index.html#nosotros">Nosotros</a></li>
+            <li><a href="carrito.html">Carrito</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Categorías</h4>
+          <ul>
+            <li><a href="tienda.html">Cuidado Facial</a></li>
+            <li><a href="tienda.html">Cuidado Corporal</a></li>
+            <li><a href="tienda.html">Cuidado Capilar</a></li>
+            <li><a href="tienda.html">Kits y Regalos</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Origen Valle. Todos los derechos reservados.</span>
+        <span>Hecho con 💚 en el Valle del Aconcagua, Chile</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script>
+    // Renderizar productos sugeridos (los que no están en el carrito, máx 4)
+    document.addEventListener('DOMContentLoaded', () => {
+      const grid = document.getElementById('suggested-grid');
+      if (!grid) return;
+      const cartIds = getCart().map(i => i.id);
+      const suggestions = PRODUCTS
+        .filter(p => !cartIds.includes(p.id))
+        .slice(0, 4);
+      if (suggestions.length > 0) {
+        grid.innerHTML = suggestions.map(createProductCard).join('');
+      } else {
+        // Si todo está en carrito, mostrar primeros 4
+        grid.innerHTML = PRODUCTS.slice(0, 4).map(createProductCard).join('');
+      }
+    });
+  </script>
+</body>
+</html>
