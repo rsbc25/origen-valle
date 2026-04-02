@@ -254,7 +254,7 @@ function createProductCard(product) {
       </div>
       <div class="product-card__footer">
         <div class="product-card__price">
-          ${formatPrice(product.price)} <span>COP</span>
+          ${formatPrice(product.price)} <span>CLP</span>
         </div>
         <button class="add-to-cart-btn" onclick="handleAddToCart(${product.id}, this)">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
