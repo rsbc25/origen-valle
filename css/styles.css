@@ -386,11 +386,15 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   font-weight: 600;
   color: var(--primary-dark);
   white-space: nowrap;
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
 }
 .product-card__price span {
-  font-size: 0.72rem;
-  font-weight: 400;
+  font-size: 0.68rem;
+  font-weight: 500;
   color: var(--medium);
+  white-space: nowrap;
 }
 .add-to-cart-btn {
   display: flex;
