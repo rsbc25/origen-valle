@@ -375,31 +375,37 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 0.5rem;
   padding: 1rem 1.25rem;
   border-top: 1px solid var(--border);
   background: var(--cream);
+  flex-wrap: wrap;
 }
 .product-card__price {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 600;
   color: var(--primary-dark);
+  white-space: nowrap;
 }
 .product-card__price span {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 400;
   color: var(--medium);
 }
 .add-to-cart-btn {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
-  padding: 8px 16px;
+  padding: 8px 14px;
   background: var(--primary);
   color: var(--white);
   border-radius: var(--radius-pill);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 500;
   transition: var(--transition);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 .add-to-cart-btn:hover {
   background: var(--primary-dark);
@@ -408,7 +414,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .add-to-cart-btn.added {
   background: var(--accent);
 }
-.add-to-cart-btn svg { width: 16px; height: 16px; }
+.add-to-cart-btn svg { width: 15px; height: 15px; flex-shrink: 0; }
 
 /* ============================================
    GRID DE PRODUCTOS
@@ -883,6 +889,17 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
   }
+  /* Footer apilado en 2 columnas */
+  .product-card__footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+    padding: 0.85rem 1rem;
+  }
+  .add-to-cart-btn {
+    width: 100%;
+    padding: 9px 12px;
+  }
 
   /* Footer */
   .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
@@ -919,18 +936,17 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   .product-card__footer {
     flex-direction: column;
     align-items: stretch;
-    gap: 0.6rem;
+    gap: 0.5rem;
     padding: 0.75rem;
   }
-  .product-card__price { font-size: 0.95rem; }
+  .product-card__price { font-size: 0.9rem; }
   .add-to-cart-btn {
     width: 100%;
-    justify-content: center;
-    padding: 9px 12px;
-    font-size: 0.78rem;
+    padding: 9px 10px;
+    font-size: 0.76rem;
   }
-  .product-card__name { font-size: 0.92rem; }
-  .product-card__category { font-size: 0.68rem; }
+  .product-card__name { font-size: 0.9rem; }
+  .product-card__category { font-size: 0.66rem; }
 }
 
 /* ---- Teléfono pequeño (≤ 400px) ---- */
@@ -945,10 +961,11 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   .product-card__footer {
     flex-direction: row;
     align-items: center;
-    padding: 0.85rem 1rem;
+    padding: 0.9rem 1rem;
+    gap: 0.75rem;
   }
   .product-card__price { font-size: 1rem; }
-  .add-to-cart-btn { width: auto; justify-content: flex-start; }
+  .add-to-cart-btn { width: auto; padding: 9px 16px; font-size: 0.8rem; }
   .product-card__name { font-size: 1rem; }
 
   /* Sección */
