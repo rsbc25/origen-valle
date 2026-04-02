@@ -110,10 +110,24 @@
       margin-bottom: 0.5rem;
     }
     .store-banner-text p { color: rgba(255,255,255,0.85); font-size: 0.9rem; }
-    @media (max-width: 640px) {
-      .store-hero .container { grid-template-columns: 1fr; }
+    @media (max-width: 768px) {
+      .store-hero { padding: 2.5rem 0 1.5rem; }
+      .store-hero .container { grid-template-columns: 1fr; gap: 1.25rem; }
       .store-search { min-width: 100%; }
-      .store-banner { flex-direction: column; text-align: center; padding: 2rem; }
+      .store-intro h1 { font-size: 1.8rem; }
+      .store-section { padding: 2rem 0 3rem; }
+    }
+    @media (max-width: 600px) {
+      .store-hero { padding: 2rem 0 1rem; }
+      .filters-section .container { gap: 0.5rem; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 0.25rem; }
+      .filters-label { display: none; }
+      .filters-count { display: none; }
+      .filter-btn { white-space: nowrap; flex-shrink: 0; padding: 7px 14px; font-size: 0.78rem; }
+      .store-banner { flex-direction: column; text-align: center; padding: 1.75rem 1.25rem; gap: 1.25rem; }
+      .store-banner-text h3 { font-size: 1.25rem; }
+    }
+    @media (max-width: 400px) {
+      .store-intro h1 { font-size: 1.5rem; }
     }
   </style>
 </head>
