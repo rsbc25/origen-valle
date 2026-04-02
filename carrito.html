@@ -118,8 +118,26 @@
       max-width: 60px;
     }
 
-    @media (max-width: 640px) {
-      .suggested-grid { grid-template-columns: repeat(2, 1fr); }
+    @media (max-width: 768px) {
+      .cart-header-section { padding: 2.5rem 0 1.75rem; }
+      .suggested-section { padding: 2.5rem 0; }
+      .suggested-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+      .cart-steps { margin-bottom: 1.5rem; }
+      .step { font-size: 0.75rem; }
+      .step-line { max-width: 30px; margin: 0 0.4rem; }
+    }
+    @media (max-width: 600px) {
+      .cart-header-section { padding: 2rem 0 1.5rem; }
+      .cart-header-section h1 { font-size: 1.75rem; }
+      .suggested-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+      .secure-badges { gap: 1rem; }
+      .coupon-row { flex-direction: column; }
+      .coupon-btn { width: 100%; padding: 10px; }
+    }
+    @media (max-width: 400px) {
+      .suggested-grid { grid-template-columns: 1fr; }
+      .step span { display: none; }
+      .step-line { max-width: 20px; }
     }
   </style>
 </head>
