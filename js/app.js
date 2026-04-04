@@ -5,6 +5,8 @@
 
 'use strict';
 
+const WA_PHONE = '56982233777';
+
 /* ---- Catálogo de productos ---- */
 const PRODUCTS = [
   {
@@ -251,17 +253,18 @@ function createProductCard(product) {
         <div class="product-card__category">${product.categoryLabel}</div>
         <h3 class="product-card__name">${product.name}</h3>
         <p class="product-card__desc">${product.description}</p>
+        <div class="product-micro-badges">
+          <span class="micro-badge">🌿 Natural</span>
+          <span class="micro-badge">✋ Artesanal</span>
+          <span class="micro-badge">🧴 Lote pequeño</span>
+        </div>
       </div>
       <div class="product-card__footer">
         <div class="product-card__price">
           ${formatPrice(product.price)} <span>CLP</span>
         </div>
-        <button class="add-to-cart-btn" onclick="handleAddToCart(${product.id}, this)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
-            <path d="M1 1h4l2.68 13.39a2 2 0 001.98 1.61h9.72a2 2 0 001.98-1.61L23 6H6"/>
-          </svg>
-          Agregar
+        <button class="buy-btn" onclick="openBuyModal(${product.id})">
+          Comprar
         </button>
       </div>
     </div>
@@ -282,28 +285,6 @@ function renderProducts(filter = 'all', containerId = 'products-grid') {
   if (countEl) countEl.textContent = `${filtered.length} producto${filtered.length !== 1 ? 's' : ''}`;
 }
 
-function handleAddToCart(productId, btn) {
-  addToCart(productId);
-  const product = PRODUCTS.find(p => p.id === productId);
-  showToast(`"${product.name}" agregado al carrito`);
-
-  // Animación del botón
-  btn.classList.add('added');
-  btn.innerHTML = `
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
-      <polyline points="20 6 9 17 4 12"/>
-    </svg>
-    Agregado`;
-  setTimeout(() => {
-    btn.classList.remove('added');
-    btn.innerHTML = `
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
-        <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
-        <path d="M1 1h4l2.68 13.39a2 2 0 001.98 1.61h9.72a2 2 0 001.98-1.61L23 6H6"/>
-      </svg>
-      Agregar`;
-  }, 2000);
-}
 
 /* ============================================
    UI — Filtros
@@ -413,9 +394,72 @@ function checkoutWhatsApp() {
   });
   msg += `\n💚 *Total: ${formatPrice(getCartTotal())}*\n\n¿Cómo puedo pagar y coordinar el envío?`;
 
-  const phone = '56982233777';
-  const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+  const url = `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(msg)}`;
   window.open(url, '_blank');
+}
+
+/* ============================================
+   MODAL DE COMPRA
+   ============================================ */
+let lastFocusedElement = null;
+
+function openBuyModal(productId) {
+  const product = PRODUCTS.find(p => p.id === productId);
+  if (!product) return;
+
+  const modal = document.getElementById('buy-modal');
+  const titleEl = document.getElementById('buy-modal-product-name');
+  const waBtn = document.getElementById('buy-whatsapp-btn');
+
+  if (!modal || !titleEl || !waBtn) return;
+
+  lastFocusedElement = document.activeElement;
+
+  titleEl.textContent = product.name;
+
+  const msg = `Hola! Me interesa comprar *${product.name}* de Origen Valle 🌿 ¿Me pueden dar más información?`;
+  waBtn.href = `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(msg)}`;
+
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+
+  const closeBtn = modal.querySelector('.buy-modal__close');
+  if (closeBtn) closeBtn.focus();
+
+  // Focus trap
+  const focusable = Array.from(modal.querySelectorAll('a[href], button:not([disabled])'));
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+  modal._trapHandler = function(e) {
+    if (e.key !== 'Tab') return;
+    if (e.shiftKey) {
+      if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+    } else {
+      if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  };
+  modal.addEventListener('keydown', modal._trapHandler);
+}
+
+function closeBuyModal() {
+  const modal = document.getElementById('buy-modal');
+  if (!modal) return;
+  if (modal._trapHandler) {
+    modal.removeEventListener('keydown', modal._trapHandler);
+    modal._trapHandler = null;
+  }
+  modal.classList.remove('active');
+  document.body.style.overflow = '';
+  if (lastFocusedElement) {
+    lastFocusedElement.focus();
+    lastFocusedElement = null;
+  }
+}
+
+function closeBuyModalOnOverlay(event) {
+  if (event.target === event.currentTarget) {
+    closeBuyModal();
+  }
 }
 
 /* ============================================
@@ -423,6 +467,13 @@ function checkoutWhatsApp() {
    ============================================ */
 document.addEventListener('DOMContentLoaded', () => {
   initNavbar();
+
+  // Escape key closes buy modal (only register if modal exists on this page)
+  if (document.getElementById('buy-modal')) {
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeBuyModal();
+    });
+  }
 
   const page = document.body.dataset.page;
 
