@@ -1324,3 +1324,64 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 @media (prefers-reduced-motion: reduce) {
   .whatsapp-float { animation: none; }
 }
+
+/* ---- BOTÓN INSTAGRAM FLOTANTE ---- */
+.instagram-float {
+  position: fixed;
+  bottom: 5.5rem;
+  left: 2rem;
+  width: 58px;
+  height: 58px;
+  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-decoration: none;
+  z-index: 1500;
+  box-shadow: 0 4px 20px rgba(214, 36, 159, 0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.instagram-float:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 28px rgba(214, 36, 159, 0.55);
+}
+
+.instagram-float__tooltip {
+  position: absolute;
+  left: 68px;
+  background: var(--dark);
+  color: white;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 8px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.instagram-float__tooltip::before {
+  content: '';
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 6px solid transparent;
+  border-right-color: var(--dark);
+}
+
+.instagram-float:hover .instagram-float__tooltip {
+  opacity: 1;
+}
+
+@media (max-width: 600px) {
+  .instagram-float { bottom: 5rem; left: 1.25rem; width: 52px; height: 52px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .instagram-float { animation: none; }
+}
