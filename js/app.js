@@ -263,12 +263,38 @@ function createProductCard(product) {
         <div class="product-card__price">
           ${formatPrice(product.price)} <span>CLP</span>
         </div>
-        <button class="buy-btn" onclick="openBuyModal(${product.id})">
-          Comprar
+        <button class="add-to-cart-btn" onclick="handleAddToCart(${product.id}, this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+            <path d="M1 1h4l2.68 13.39a2 2 0 001.98 1.61h9.72a2 2 0 001.98-1.61L23 6H6"/>
+          </svg>
+          Agregar
         </button>
       </div>
     </div>
   `;
+}
+
+function handleAddToCart(productId, btn) {
+  addToCart(productId);
+  const product = PRODUCTS.find(p => p.id === productId);
+  showToast(`"${product.name}" agregado al carrito`);
+
+  btn.classList.add('added');
+  btn.innerHTML = `
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+      <polyline points="20 6 9 17 4 12"/>
+    </svg>
+    Agregado`;
+  setTimeout(() => {
+    btn.classList.remove('added');
+    btn.innerHTML = `
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+        <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+        <path d="M1 1h4l2.68 13.39a2 2 0 001.98 1.61h9.72a2 2 0 001.98-1.61L23 6H6"/>
+      </svg>
+      Agregar`;
+  }, 2000);
 }
 
 function renderProducts(filter = 'all', containerId = 'products-grid') {
@@ -403,21 +429,24 @@ function checkoutWhatsApp() {
    ============================================ */
 let lastFocusedElement = null;
 
-function openBuyModal(productId) {
-  const product = PRODUCTS.find(p => p.id === productId);
-  if (!product) return;
-
+function openBuyModal() {
   const modal = document.getElementById('buy-modal');
-  const titleEl = document.getElementById('buy-modal-product-name');
   const waBtn = document.getElementById('buy-whatsapp-btn');
 
-  if (!modal || !titleEl || !waBtn) return;
+  if (!modal || !waBtn) return;
 
   lastFocusedElement = document.activeElement;
 
-  titleEl.textContent = product.name;
-
-  const msg = `Hola! Me interesa comprar *${product.name}* de Origen Valle 🌿 ¿Me pueden dar más información?`;
+  // Construir URL de WhatsApp con el carrito completo
+  const cart = getCart();
+  let msg = '🌿 *Hola Origen Valle!* Me gustaría hacer el siguiente pedido:\n\n';
+  cart.forEach(item => {
+    const product = PRODUCTS.find(p => p.id === item.id);
+    if (product) {
+      msg += `• *${product.name}* x${item.qty} — ${formatPrice(product.price * item.qty)}\n`;
+    }
+  });
+  msg += `\n💚 *Total: ${formatPrice(getCartTotal())}*\n\n¿Cómo puedo pagar y coordinar el envío?`;
   waBtn.href = `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(msg)}`;
 
   modal.classList.add('active');
